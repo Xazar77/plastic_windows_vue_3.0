@@ -1,0 +1,25 @@
+
+export const kitchens = {
+    state() {
+        return {
+            kitchens: []
+        }
+    },
+    mutations: {
+        setServicesKitchensSlide(state, data) {
+           state.kitchens = data
+        }
+    },
+    actions: {
+        setServicesKitchensSlide({commit}, data) {
+            commit('setServicesKitchensSlide', data)
+        }
+    },
+
+    getters: {
+        getServicesKitchensSlide(state) {
+            console.log(state.kitchens)
+            return state.kitchens
+        }
+    }
+}
