@@ -23,7 +23,7 @@
     })
 
     onMounted(() => {
-        fetch('http://localhost:2601/services')
+        fetch('https://plastic-windows-default-rtdb.firebaseio.com/db/services.json')
         .then(res => res.json())
         .then((data) => {
             store.dispatch("setServicesSlide", data);

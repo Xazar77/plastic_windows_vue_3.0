@@ -18,7 +18,6 @@ export const kitchens = {
 
     getters: {
         getServicesKitchensSlide(state) {
-            console.log(state.kitchens)
             return state.kitchens
         }
     }

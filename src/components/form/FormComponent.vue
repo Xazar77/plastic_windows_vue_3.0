@@ -1,6 +1,6 @@
 <script setup>
     import InputMask from 'primevue/inputmask';
-
+    import ResponseMessageModalComponent from '../modals/ResponseMessageModalComponent.vue';
     import { ref, computed } from 'vue'
     import { useRoute } from 'vue-router';
     
@@ -22,9 +22,10 @@
         }
     })
     
-    const form = ref(null)
+   
     const name = ref('')
     const phone = ref('')
+    const isOpen = ref(false)
    
 
 
@@ -94,9 +95,10 @@
         },
       }).then((res) => {
         if (res.ok) {
-        //   form.value.reset();
+          document.querySelector('form').reset();
             name.value = ''
             phone.value = ''
+            // isOpen.value = true
         }
       });
 
@@ -113,7 +115,7 @@
 <template>
 
 
-    <form :name="nameAttbr" :class="className ?? ''" ref="form" @submit.prevent="submit" >
+    <form :name="nameAttbr" :class="className ?? ''"  @submit.prevent="submit" >
         <div class="form-group">
             <div class="col-sm-12" v-if="nameAttbr === 'action-form'">
                 <input type="text" 
@@ -179,6 +181,7 @@
         <input type="hidden" name="page" value="Окна" v-else>
         <input type="hidden" name="subject" value="Стандартные ПВХ-окна" v-if="nameAttbr === 'application-form' && nameAttbr !== 'action-form'">
     </form>
+
 
 </template>
 

@@ -1,22 +1,26 @@
 <script setup>
     import { Swiper, SwiperSlide } from 'swiper/vue'
-    import { Navigation } from 'swiper/modules'
+    import { Autoplay, Navigation } from 'swiper/modules'
     import 'swiper/css'
     import 'swiper/css/navigation';
 
     import { computed, ref, onMounted } from 'vue';
     import { useStore } from 'vuex';
     import { useRoute } from 'vue-router';
+    // import { useSwiper } from 'swiper/vue';
     
     const route = useRoute()
     const store = useStore()
+    // const swiper = useSwiper();
 
     const props = defineProps({
         showSlides: {
             type: Function
         }
     })
-    const modules = ref([Navigation])
+    const modules = ref([Autoplay, Navigation])
+
+    // const isActive = ref(true)
 
     const pageName = computed(() => {
         return route.name
@@ -37,21 +41,21 @@
             return store.getters['getServicesKitchensSlide']
         }
     })
-    console.log(getServicesSlides.value)
+    
 
     
     onMounted(() => {
-        fetch(`http://localhost:2601/${pageName.value}`)
+        fetch(`https://plastic-windows-default-rtdb.firebaseio.com/db/${pageName.value}.json`)
         .then(res => res.json())
         .then((data) => {
             if(pageName.value === 'windows') {
-                console.log(data)
+              
                 store.dispatch("setServicesWindowsSlide", data);
             } else if(pageName.value === 'balconies') {
-                console.log(data)
+               
                 store.dispatch("setServicesBalconiesSlide", data);
             } else if(pageName.value === 'kitchens') {
-               console.log(data)
+             
                 store.dispatch("setServicesKitchensSlide", data);
             }
             
@@ -63,15 +67,22 @@
 
 <template>
     <Teleport to="body" >
-        <Swiper :navigation="true" 
+        <swiper 
+            :navigation="true" 
+            :slides-per-view="1"
             :modules="modules" 
+            :centeredSlides="true"
             class="mySwiper"
-            :loop="true">
-            <SwiperSlide v-for="slide in getServicesSlides" :key="slide.id" >
+            :autoplay="{
+                delay: 2500,
+                pauseOnMouseEnter: true
+            }"
+            >
+            <swiper-slide v-for="slide in getServicesSlides" :key="slide.id">
                 <img :src="getImageUrl(slide.image)" :alt="slide.image" class="services_big_slide" />
-            </SwiperSlide>
+            </swiper-slide>
     
-        </Swiper>
+        </swiper>
     </Teleport>
 
 </template>

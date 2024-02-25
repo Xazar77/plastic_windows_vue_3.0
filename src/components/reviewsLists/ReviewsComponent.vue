@@ -24,7 +24,7 @@
     intervalId = setInterval(runItem, 4000)
 
     onMounted(() => {
-        fetch('http://localhost:2601/reviews')
+        fetch('https://plastic-windows-default-rtdb.firebaseio.com/db/reviews.json')
         .then(res => res.json())
         .then((data) => {
             store.dispatch("setReviewsSlide", data);

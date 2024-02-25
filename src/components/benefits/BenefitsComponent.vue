@@ -26,7 +26,7 @@
     })
 
     onMounted(() => {
-        fetch('http://localhost:2601/benefits')
+        fetch('https://plastic-windows-default-rtdb.firebaseio.com/db/benefits.json')
         .then(res => res.json())
         .then((data) => {
             store.dispatch("setBenefitsSlide", data);

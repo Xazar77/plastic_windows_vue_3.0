@@ -12,7 +12,7 @@ const getDocumentsItem = computed(() => {
 })
 
 onMounted(() => {
-    fetch('http://localhost:2601/documents')
+    fetch('https://plastic-windows-default-rtdb.firebaseio.com/db/documents.json')
         .then(res => res.json())
         .then((data) => {
             store.dispatch("setDocumentItem", data);
