@@ -3,6 +3,8 @@
 <script setup>
     import OrderModalComponent from "@/components/modals/OrderModalComponent.vue";
     import OrderCounterComponent from "./OrderCounterComponent.vue"
+    import ResponseMessageModalComponent from '../modals/ResponseMessageModalComponent.vue';
+    import OverlayModalComponent from '../modals/OverlayModalComponent.vue';
 
     import { ref, onMounted, onUnmounted, reactive } from 'vue';
 
@@ -10,7 +12,8 @@
 
     let intervalId = ref(undefined)
     let timerObj = ref({})
-   
+    let isOpenResponse = ref(false)
+    let isOpen = ref(false)
 
     const deadline = '11 february 2025 19:56:00.000'
 
@@ -57,6 +60,14 @@
 
 	}
 
+    const closeOrderModal = () => {
+        isOpenResponse.value = true
+    }
+
+    //  const closeResponseModal = () => {
+    //     isOpenResponse.value = false
+    // }
+
     onMounted(() => {
         intervalId = setInterval(() => {
             getTimeRemaining()
@@ -85,11 +96,14 @@
                             </div>
                         </div>
                     </div>
-                    <order-modal-component/>
+
+                    <order-modal-component />
                 </div>
             </div>
         </div>
     </div>
+
+
 </template>
 
 <style scoped>

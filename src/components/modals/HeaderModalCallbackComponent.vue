@@ -2,18 +2,21 @@
 
 <script setup>
     import FormComponent from '../form/FormComponent.vue';
+    
 
-    import { ref } from 'vue'
  
     const props = defineProps({
        
         closeModal: {
             type: Function
+        },
+        isOpen: {
+            type: Boolean
         }
     })
 
 
-    const isClose = ref(false)
+    
 
 </script>
 
@@ -21,7 +24,7 @@
 <template>
     <Teleport  to="body">
         
-        <div class="header-modal " :class="isClose? 'hidden' : 'header-modal--opened'">
+        <div class="header-modal " :class="isOpen? 'header-modal--opened' : 'hidden'" >
             <div class="fancybox-skin" style="padding: 0px; width: auto; height: auto;">
                 <div class="fancybox-outer">
                     <div class="fancybox-inner" style="overflow: hidden; width: 580px; height: 495px;">
@@ -37,6 +40,7 @@
                                     buttonText="Свяжитесь со мной!"
                                     classBtn="btn-warning"/>
                                 <span class="help-block">Гарантируем 100% конфиденциальность. Ваша информация не будет распространяться.</span>
+                                {{ isOpen }}
                             </div>
                         </div>
                     </div>
@@ -44,6 +48,7 @@
                 <span  title="Close" class="header-modal__close" @click="closeModal">x</span>    
             </div>
         </div>
+        
         
     </Teleport>
 

@@ -19,6 +19,6 @@
 
 <style scoped>
     .overlay{
-        z-index: 9999;
+        z-index: 9000;
     }
 </style>

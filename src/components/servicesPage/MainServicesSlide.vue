@@ -3,7 +3,8 @@
     import BigSlideItemsComponent from './BigSlideItemsComponent.vue';
     import OverlayModalComponent from '../modals/OverlayModalComponent.vue';
     import ServicesModalComponent from '../modals/ServicesModalComponent.vue';
-
+    import ResponseMessageModalComponent from '../modals/ResponseMessageModalComponent.vue';
+    
     import { ref, computed } from 'vue'
     // import { useRoute } from 'vue-router';
     
@@ -20,8 +21,11 @@
 
     let isOpen = ref(false)
     let isShowSlides = ref(false)
+    let isOpenResponse = ref(false)
+    let isOverlay = ref(false)
 
-    const openModal = () => {                       
+    const openModal = () => {
+        isOverlay.value = true                       
         isOpen.value = true
         window.addEventListener('keydown', (e) => closeModalEscape(e))
     }
@@ -32,8 +36,16 @@
     }
 
     const closeModal = () => { 
-       return  isOpen.value = false
+        isOpen.value = false
+        isOpenResponse.value = true
    }
+
+   const closeResponseModal = () => {
+        isOverlay.value = false 
+        isOpenResponse.value = false
+    }
+
+
     const closeModalEscape = (e) => {
         if(e.keyCode === 27) {
             isOpen.value = false
@@ -79,11 +91,12 @@
             </div>
         </div>
     </div>
-    <overlay-modal-component v-if="isOpen"
-    :closeModal="closeModal"/>
+    <overlay-modal-component v-if="isOverlay"/>
     <big-slide-items-component v-if="isShowSlides"/>
     <services-modal-component v-if="isOpen"
     :closeModal="closeModal"/>
+    <response-message-modal-component v-if="isOpenResponse"
+    :closeResponseModal="closeResponseModal"/>
 </template>
 
 <style scoped>

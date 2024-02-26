@@ -1,6 +1,7 @@
 <script setup>
     import HeaderModalCallbackComponent from '../modals/HeaderModalCallbackComponent.vue';
     import OverlayModalComponent from '../modals/OverlayModalComponent.vue';
+    import ResponseMessageModalComponent from '../modals/ResponseMessageModalComponent.vue';
 
     import { ref, computed } from 'vue'
     import { useStore } from 'vuex';
@@ -10,6 +11,8 @@
     const store = useStore()
     
     let isOpen = ref(false)
+    let isOpenResponse = ref(false)
+    let isOverlay = ref(false)
 
   
 
@@ -20,12 +23,19 @@
 
     const openModal = () => {
         isOpen.value = true
+        isOverlay.value = true
         window.addEventListener('keydown', (e) => closeModalEscape(e))
        
     }
 
     const closeModal = () => {
-        return  isOpen.value = false  
+        isOpen.value = false
+        isOpenResponse.value = true
+    }
+
+    const closeResponseModal = () => {
+        isOpenResponse.value = false 
+        isOverlay.value = false 
     }
 
 
@@ -76,10 +86,11 @@
     </div>
 
    
-    <overlay-modal-component v-if="isOpen"
-    :closeModal="closeModal"/>
+    <overlay-modal-component v-if="isOverlay"/>
     <header-modal-callback-component v-if="isOpen"
-    :closeModal="closeModal"/>
+    :closeModal="closeModal" :isOpen="isOpen"/>
+    <response-message-modal-component v-if="isOpenResponse"
+    :closeResponseModal="closeResponseModal"/>
 
   
 

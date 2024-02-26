@@ -1,9 +1,11 @@
 <script setup>
     import InputMask from 'primevue/inputmask';
-    import ResponseMessageModalComponent from '../modals/ResponseMessageModalComponent.vue';
     import { ref, computed } from 'vue'
     import { useRoute } from 'vue-router';
-    
+    import ResponseMessageModalComponent from '../modals/ResponseMessageModalComponent.vue';
+    import OverlayModalComponent from '../modals/OverlayModalComponent.vue';
+   
+   
     const route = useRoute()
 
 
@@ -25,8 +27,7 @@
    
     const name = ref('')
     const phone = ref('')
-    const isOpen = ref(false)
-   
+    let isResponse = ref(false)
 
 
     const isNumber = (e) => {
@@ -36,6 +37,7 @@
             if(e.defaultPrevented) e.preventDefault()
         }
     }
+
 
 
     const isValidName = computed(() => {
@@ -63,7 +65,10 @@
         name.value = (name.value.charAt(0).toUpperCase() + name.value.substring(1).toLowerCase()).replace(/[^а-яё-]/gi, '')
     }
 
-    // console.log(calcTotal.value.placeholder)
+    const closeResponseModal = () => {
+        isResponse.value = false
+    }
+
 
     const submit = () => {
   
@@ -98,7 +103,7 @@
           document.querySelector('form').reset();
             name.value = ''
             phone.value = ''
-            // isOpen.value = true
+            isResponse.value = true
         }
       });
 
@@ -166,7 +171,7 @@
             <div class="col-sm-12">
                 <div class="order-form-button">
                     <input type="hidden" name="page" value="Окна">
-                    <button type="submit" class="btn btn-warning btn-block feedback">Получить скидку!</button>
+                    <button type="submit" :disabled="!validForm" class="btn btn-warning btn-block feedback">Получить скидку!</button>
                 </div>
             </div>
         </div>
@@ -180,7 +185,11 @@
         </div>
         <input type="hidden" name="page" value="Окна" v-else>
         <input type="hidden" name="subject" value="Стандартные ПВХ-окна" v-if="nameAttbr === 'application-form' && nameAttbr !== 'action-form'">
+        <overlay-modal-component v-if="isResponse"/>
+        <response-message-modal-component v-if="isResponse"
+        :closeResponseModal="closeResponseModal"/>
     </form>
+
 
 
 </template>
